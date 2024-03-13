@@ -1,41 +1,50 @@
-name: 'action-clang-tidy'
-description: 'Check repository using clang-tidy'
-author: 'HorstBaerbel / Bim Overbohm'
+name: "action-clang-tidy"
+description: "Check repository using clang-tidy"
+author: "HorstBaerbel / Bim Overbohm"
 branding:
   icon: check-circle
   color: gray-dark
 inputs:
   scandir:
-    description: 'Scan directory'
+    description: "Scan directory"
     required: false
-    default: '.'
+    default: "."
   builddir:
-    description: 'Build directory'
+    description: "Build directory"
     required: false
-    default: 'build'
+    default: "build"
   excludedirs:
-    description: 'Exclude directories'
+    description: "Exclude directories"
     required: false
-    default: ''
+    default: ""
   extensions:
-    description: 'File extensions to include in check'
+    description: "File extensions to include in check"
     required: false
-    default: 'c,h,C,H,cpp,hpp,cc,hh,c++,h++,cxx,hxx'
+    default: "c,h,C,H,cpp,hpp,cc,hh,c++,h++,cxx,hxx"
   cmakeoptions:
-    description: 'Additional options to pass to cmake'
+    description: "Additional options to pass to cmake"
     required: false
-    default: ''
+    default: ""
   useexistingbuild:
-    description: 'Use existing build'
+    description: "Use existing build"
     required: false
-    default: 'false'
+    default: "false"
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.scandir }}
-    - ${{ inputs.builddir }}
-    - ${{ inputs.excludedirs }}
-    - ${{ inputs.extensions }}
-    - ${{ inputs.cmakeoptions }}
-    - ${{ inputs.useexistingbuild }}
+  using: "composite"
+  steps:
+    - if: ${{ inputs.useexistingbuild }} == 'false'
+      uses: ./.github/actions/build_within_docker
+      with:
+        scandir: ${{ inputs.scandir }}
+        builddir: ${{ inputs.builddir }}
+        excludedirs: ${{ inputs.excludedirs }}
+        extensions: ${{ inputs.extensions }}
+        cmakeoptions: ${{ inputs.cmakeoptions }}
+
+    - if: ${{ inputs.useexistingbuild }} == 'true'
+      uses: ./.github/actions/use_existing_build
+      with:
+        scandir: ${{ inputs.scandir }}
+        builddir: ${{ inputs.builddir }}
+        excludedirs: ${{ inputs.excludedirs }}
+        extensions: ${{ inputs.extensions }}
