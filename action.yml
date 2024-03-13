@@ -41,6 +41,11 @@ runs:
       run: echo "Using existing cmake configuration in ${{ inputs.builddir }} directory"
 
     - if: ${{ inputs.useexistingbuild }} == false
+      name: "Copy run-clang-tidy.py to dockerfile context"
+      shell: bash
+      run: cp ./action-clang-tidy/run-clang-tidy.py ./action-clang-tidy/build_within_docker/run-clang-tidy.py
+
+    - if: ${{ inputs.useexistingbuild }} == false
       uses: ./action-clang-tidy/build_within_docker
       with:
         scandir: ${{ inputs.scandir }}

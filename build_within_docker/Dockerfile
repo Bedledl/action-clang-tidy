@@ -10,7 +10,7 @@ LABEL repository="https://github.com/HorstBaerbel/action-clang-tidy"
 LABEL homepage="https://github.com/HorstBaerbel/action-clang-tidy"
 LABEL maintainer="Bim Overbohm <bim.overbohm@googlemail.com>"
 
-COPY ../run-clang-tidy.py /run-clang-tidy.py
+COPY run-clang-tidy.py /run-clang-tidy.py
 RUN chmod +x /run-clang-tidy.py
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
