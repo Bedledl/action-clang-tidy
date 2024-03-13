@@ -26,4 +26,8 @@ inputs:
     required: false
     default: "false"
 runs:
-  run: python3 /run-clang-tidy.py "${{inputs.scandir}}" "${{inputs.builddir}}}" "${{inputs.excludedirs}}" "${{inputs.extensions}}"
+  using: "composite"
+  steps:
+    - name: "Run clang-tidy using existing build"
+      shell: python3
+      run: run-clang-tidy.py "${{inputs.scandir}}" "${{inputs.builddir}}}" "${{inputs.excludedirs}}" "${{inputs.extensions}}"
