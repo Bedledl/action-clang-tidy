@@ -32,23 +32,15 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - if: ${{ inputs.useexistingbuild == false }}
-      shell: bash
-      run: echo "1 Running cmake in docker container"
-
     - if: ${{ inputs.useexistingbuild }} == false
       shell: bash
-      run: echo "2 Running cmake in docker container"
-
-    - if: ${{ inputs.useexistingbuild == true }}
-      shell: bash
-      run: echo "3 Using existing build"
+      run: echo "Running cmake in docker container"
 
     - if: ${{ inputs.useexistingbuild }} == true
       shell: bash
-      run: echo "4  Using existing build"
+      run: echo "Using existing cmake configuration in ${{ inputs.builddir }} directory"
 
-    - if: ${{ inputs.useexistingbuild == false }}
+    - if: ${{ inputs.useexistingbuild }} == false
       uses: ./action-clang-tidy/build_within_docker
       with:
         scandir: ${{ inputs.scandir }}
@@ -57,7 +49,7 @@ runs:
         extensions: ${{ inputs.extensions }}
         cmakeoptions: ${{ inputs.cmakeoptions }}
 
-    - if: ${{ inputs.useexistingbuild == true }}
+    - if: ${{ inputs.useexistingbuild }} == true
       uses: ./action-clang-tidy/use_existing_build
       with:
         scandir: ${{ inputs.scandir }}
