@@ -45,6 +45,14 @@ runs:
       shell: bash
       run: cp ./action-clang-tidy/run-clang-tidy.py ./action-clang-tidy/build_within_docker/run-clang-tidy.py
 
+    - if: ${{ inputs.useexistingbuild }} == true
+      uses: ./action-clang-tidy/use_existing_build
+      with:
+        scandir: ${{ inputs.scandir }}
+        builddir: ${{ inputs.builddir }}
+        excludedirs: ${{ inputs.excludedirs }}
+        extensions: ${{ inputs.extensions }}
+
     - if: ${{ inputs.useexistingbuild }} == false
       uses: ./action-clang-tidy/build_within_docker
       with:
@@ -53,11 +61,3 @@ runs:
         excludedirs: ${{ inputs.excludedirs }}
         extensions: ${{ inputs.extensions }}
         cmakeoptions: ${{ inputs.cmakeoptions }}
-
-    - if: ${{ inputs.useexistingbuild }} == true
-      uses: ./action-clang-tidy/use_existing_build
-      with:
-        scandir: ${{ inputs.scandir }}
-        builddir: ${{ inputs.builddir }}
-        excludedirs: ${{ inputs.excludedirs }}
-        extensions: ${{ inputs.extensions }}
