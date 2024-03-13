@@ -32,8 +32,10 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - if: ${{ inputs.useexistingbuild }} == 'false'
-      uses: build_within_docker.yml
+    - uses: actions/checkout@v2
+
+    - if: ${{ inputs.useexistingbuild == false }}
+      uses: ./build_within_docker.yml
       with:
         scandir: ${{ inputs.scandir }}
         builddir: ${{ inputs.builddir }}
@@ -41,8 +43,8 @@ runs:
         extensions: ${{ inputs.extensions }}
         cmakeoptions: ${{ inputs.cmakeoptions }}
 
-    - if: ${{ inputs.useexistingbuild }} == 'true'
-      uses: use_existing_build.yml
+    - if: ${{ inputs.useexistingbuild == true }}
+      uses: ./use_existing_build.yml
       with:
         scandir: ${{ inputs.scandir }}
         builddir: ${{ inputs.builddir }}
