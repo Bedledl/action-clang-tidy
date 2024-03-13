@@ -25,6 +25,10 @@ inputs:
     description: 'Additional options to pass to cmake'
     required: false
     default: ''
+  useexistingbuild:
+    description: 'Use existing build'
+    required: false
+    default: 'false'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -34,3 +38,4 @@ runs:
     - ${{ inputs.excludedirs }}
     - ${{ inputs.extensions }}
     - ${{ inputs.cmakeoptions }}
+    - ${{ inputs.useexistingbuild }}
