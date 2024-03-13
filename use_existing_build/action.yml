@@ -25,5 +25,5 @@ runs:
   using: "composite"
   steps:
     - name: "Run clang-tidy using existing build"
-      shell: python3
-      run: run-clang-tidy.py "${{inputs.scandir}}" "${{inputs.builddir}}}" "${{inputs.excludedirs}}" "${{inputs.extensions}}"
+      shell: bash
+      run: python3 run-clang-tidy.py "${{inputs.scandir}}" "${{inputs.builddir}}}" "${{inputs.excludedirs}}" "${{inputs.extensions}}"
