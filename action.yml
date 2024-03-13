@@ -35,7 +35,7 @@ runs:
     - uses: actions/checkout@v2
 
     - if: ${{ inputs.useexistingbuild == false }}
-      uses: action-clang-tidy/build_within_docker
+      uses: ./action-clang-tidy/build_within_docker
       with:
         scandir: ${{ inputs.scandir }}
         builddir: ${{ inputs.builddir }}
@@ -44,7 +44,7 @@ runs:
         cmakeoptions: ${{ inputs.cmakeoptions }}
 
     - if: ${{ inputs.useexistingbuild == true }}
-      uses: action-clang-tidy/use_existing_build
+      uses: ./action-clang-tidy/use_existing_build
       with:
         scandir: ${{ inputs.scandir }}
         builddir: ${{ inputs.builddir }}
