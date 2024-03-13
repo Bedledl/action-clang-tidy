@@ -33,7 +33,7 @@ runs:
   using: "composite"
   steps:
     - if: ${{ inputs.useexistingbuild }} == 'false'
-      uses: ./.github/actions/build_within_docker
+      uses: build_within_docker.yml
       with:
         scandir: ${{ inputs.scandir }}
         builddir: ${{ inputs.builddir }}
@@ -42,7 +42,7 @@ runs:
         cmakeoptions: ${{ inputs.cmakeoptions }}
 
     - if: ${{ inputs.useexistingbuild }} == 'true'
-      uses: ./.github/actions/use_existing_build
+      uses: use_existing_build.yml
       with:
         scandir: ${{ inputs.scandir }}
         builddir: ${{ inputs.builddir }}
