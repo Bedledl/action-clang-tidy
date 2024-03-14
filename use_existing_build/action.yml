@@ -26,4 +26,4 @@ runs:
   steps:
     - name: "Run clang-tidy using existing build"
       shell: bash
-      run: python3 action-clang-tidy/run-clang-tidy.py "${{inputs.scandir}}" "${{inputs.builddir}}}" "${{inputs.excludedirs}}" "${{inputs.extensions}}"
+      run: python3 action-clang-tidy/run-clang-tidy.py "${{inputs.scandir}}" "${{inputs.builddir}}" "${{inputs.excludedirs}}" "${{inputs.extensions}}"
